@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO LIST</title>
+    <link rel="stylesheet" href="./to do list.css">
+</head>
+<body>
+    <div class="mother">
+        <div class="to-do">
+            <h2>To-Do List <img src="./images/icon.png" alt="To-Do List Icon"></h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="New task...">
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="list">
+                <!-- <li class="checked">Task 1</li>
+                <li>Task 2</li>
+                <li>Task 3</li> -->
+            </ul>
+        </div>
+        <p class = "tag">victoria emonena</p>
+    </div>   
+    <script>
+        const inputBox = document.getElementById("input-box");        
+        const listContainer = document.getElementById("list");        
+        function addTask(){
+            if(inputBox.value === ""){
+                alert("Please add a task");
+            }
+            else {
+                let li = document.createElement("li")
+                li.textContent = inputBox.value;
+                addDeleteIcon(li);
+                listContainer.appendChild(li);
+                // let span = document.createElement("span");
+                // span.innerHTML = "\u00d7"; 
+                // li.appendChild(span);
+            }
+            inputBox.value = "";
+            saveData();
+        }
+
+        function addDeleteIcon(li) {
+            let deleteIcon = document.createElement("img");
+            deleteIcon.src = "./images/icons8-trash-50.png";
+            deleteIcon.alt = "Delete";
+            deleteIcon.classList.add("delete-icon");
+            li.appendChild(deleteIcon);
+        }
+
+        listContainer.addEventListener("click", function(e){
+            if(e.target.tagName === "LI"){
+                e.target.classList.toggle("checked");
+                saveData();
+            }
+            else if(e.target.tagName === "IMG" && e.target.classList.contains("delete-icon")){
+                e.target.parentElement.remove();
+                saveData();
+            }
+        }, false);
+
+        function saveData(){
+            localStorage.setItem("data", listContainer.innerHTML); 
+        }
+        function showData(){
+            listContainer.innerHTML = localStorage.getItem("data") || "";
+            document.querySelectorAll("#list li").forEach(li => {
+                if (!li.querySelector(".delete-icon")) {
+                    addDeleteIcon(li);
+                }
+            });
+        }
+        showData();
+    </script>
+</body>
+</html>
