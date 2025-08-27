@@ -168,7 +168,7 @@ ul li.checked::before {
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
     
     .to-do {
         margin: 0 20px;
@@ -188,6 +188,7 @@ ul li.checked::before {
    
 
 }
+
 
 
 
